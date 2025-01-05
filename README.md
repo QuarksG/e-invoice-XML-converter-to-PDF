@@ -1,72 +1,59 @@
-XML Invoice Processor
 
-The XML Invoice Processor is a Python-based tool designed to process XML invoices, convert them into PDF format, and save them in a timestamped directory. The tool supports processing embedded XSLT stylesheets within the XML files and provides a fallback mechanism to use a default XSLT stylesheet when embedded XSLTs are not available or invalid.
+# XML Invoice Processor
 
-Features
+The **XML Invoice Processor** is a Python-based tool designed to process XML invoices, convert them into PDF format, and save them in a timestamped directory. The tool supports processing embedded XSLT stylesheets within the XML files and provides a fallback mechanism to use a default XSLT stylesheet when embedded XSLTs are not available or invalid.
 
-Batch Processing: Automatically processes all XML files in the specified input directory.
+## Features
 
-Embedded XSLT Support: Extracts and applies embedded XSLT stylesheets for transformation.
+- **Batch Processing:** Automatically processes all XML files in the specified input directory.
+- **Embedded XSLT Support:** Extracts and applies embedded XSLT stylesheets for transformation.
+- **Fallback Mechanism:** Utilizes a default XSLT stylesheet when no embedded XSLT is available or valid.
+- **PDF Conversion:** Converts the transformed XML data into PDF format using the `pdfkit` library.
+- **Error Handling:** Captures and reports errors during XML processing, XSLT transformation, and PDF generation.
+- **Timestamped Output Directory:** Organizes generated PDFs in directories named by the current date.
 
-Fallback Mechanism: Utilizes a default XSLT stylesheet when no embedded XSLT is available or valid.
+## Requirements
 
-PDF Conversion: Converts the transformed XML data into PDF format using the pdfkit library.
+- Python 3.6+
+- Libraries:
+  - `os`
+  - `base64`
+  - `tempfile`
+  - `pdfkit`
+  - `lxml`
+- `wkhtmltopdf` executable installed and its path configured.
 
-Error Handling: Captures and reports errors during XML processing, XSLT transformation, and PDF generation.
+## Installation
 
-Timestamped Output Directory: Organizes generated PDFs in directories named by the current date.
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
+2. Install the required Python libraries:
+   ```bash
+   pip install pdfkit lxml
+   ```
+3. Install `wkhtmltopdf` and ensure it is accessible in your system PATH.
+   ```bash
+   sudo apt-get install wkhtmltopdf
+   ```
+   Or download it from [wkhtmltopdf](https://wkhtmltopdf.org/).
 
-Requirements
+## Usage
 
-Python 3.6+
+### Initialize the Processor
 
-Libraries:
+Create an instance of `XMLInvoiceProcessor` by providing:
 
-os
-
-base64
-
-tempfile
-
-pdfkit
-
-lxml
-
-wkhtmltopdf executable installed and its path configured.
-
-Installation
-
-Clone the repository:
-
-git clone <repository-url>
-cd <repository-directory>
-
-Install the required Python libraries:
-
-pip install pdfkit lxml
-
-Install wkhtmltopdf and ensure it is accessible in your system PATH.
-
-sudo apt-get install wkhtmltopdf
-
-Or download it from wkhtmltopdf.
-
-Usage
-
-Initialize the Processor
-
-Create an instance of XMLInvoiceProcessor by providing:
-
-The directory containing XML invoices.
-
-The output directory for saving PDFs.
-
-The path to the wkhtmltopdf executable.
-
-The path to the default XSLT file.
+- The directory containing XML invoices.
+- The output directory for saving PDFs.
+- The path to the `wkhtmltopdf` executable.
+- The path to the default XSLT file.
 
 Example:
 
+```python
 from XMLInvoiceProcessor import XMLInvoiceProcessor
 
 xml_dir = "/path/to/xml/files"
@@ -75,27 +62,29 @@ wkhtmltopdf_path = "/usr/local/bin/wkhtmltopdf"
 default_xslt_path = "/path/to/default/stylesheet.xslt"
 
 processor = XMLInvoiceProcessor(xml_dir, output_dir, wkhtmltopdf_path, default_xslt_path)
+```
 
-Process Invoices
+### Process Invoices
 
-Invoke the xml_to_pdf_and_tally method to start processing XML invoices:
+Invoke the `xml_to_pdf_and_tally` method to start processing XML invoices:
 
+```python
 processor.xml_to_pdf_and_tally()
+```
 
-File Structure
+### File Structure
 
-Input Directory: Contains XML files to be processed.
+- **Input Directory:** Contains XML files to be processed.
+- **Output Directory:** Contains timestamped folders with generated PDF files.
 
-Output Directory: Contains timestamped folders with generated PDF files.
+## Error Handling
 
-Error Handling
+- If an embedded XSLT is invalid or missing, the processor falls back to the default XSLT.
+- Errors encountered during processing are printed to the console with details for debugging.
 
-If an embedded XSLT is invalid or missing, the processor falls back to the default XSLT.
+## Example XML File
 
-Errors encountered during processing are printed to the console with details for debugging.
-
-Example XML File
-
+```xml
 <Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
          xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
          xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
@@ -104,34 +93,30 @@ Example XML File
     <cbc:EmbeddedDocumentBinaryObject mimeCode="application/xml">Base64EncodedXSLT</cbc:EmbeddedDocumentBinaryObject>
   </cac:Attachment>
 </Invoice>
+```
 
-Development Notes
+## Development Notes
 
-Ensure the default XSLT file is correctly formatted and tested for compatibility.
+- Ensure the default XSLT file is correctly formatted and tested for compatibility.
+- Update the namespaces in the code if using a different UBL (Universal Business Language) schema version.
 
-Update the namespaces in the code if using a different UBL (Universal Business Language) schema version.
+## Troubleshooting
 
-Troubleshooting
+1. **PDF Not Generated:**
+   - Check the `wkhtmltopdf` path configuration.
+   - Ensure the input XML file contains valid data.
+2. **Invalid XSLT Error:**
+   - Verify that the embedded or default XSLT is valid and conforms to XML syntax.
+3. **Missing Invoice Numbers:**
+   - Ensure the `<cbc:ID>` tag exists in the XML file.
 
-PDF Not Generated:
-
-Check the wkhtmltopdf path configuration.
-
-Ensure the input XML file contains valid data.
-
-Invalid XSLT Error:
-
-Verify that the embedded or default XSLT is valid and conforms to XML syntax.
-
-Missing Invoice Numbers:
-
-Ensure the <cbc:ID> tag exists in the XML file.
-
-License
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-Contribution
+## Contribution
 
 Contributions are welcome! Feel free to fork the repository and submit pull requests for improvements or new features.
+```
 
+You can copy and use it as needed. Let me know if you need further assistance!
