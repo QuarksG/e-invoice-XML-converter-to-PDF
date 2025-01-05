@@ -27,8 +27,8 @@ The **XML Invoice Processor** is a Python-based tool designed to process XML inv
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/QuarksG/e-invoice-XML-converter-to-PDF.git
+   cd https://github.com/QuarksG/e-invoice-XML-converter-to-PDF.git
    ```
 2. Install the required Python libraries:
    ```bash
