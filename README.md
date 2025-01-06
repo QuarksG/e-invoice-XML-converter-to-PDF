@@ -117,6 +117,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Contribution
 
 Contributions are welcome! Feel free to fork the repository and submit pull requests for improvements or new features.
-```
 
-You can copy and use it as needed. Let me know if you need further assistance!
+
+
